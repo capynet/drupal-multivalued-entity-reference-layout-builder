@@ -1,0 +1,58 @@
+<div data-pel-inline-template="row-options" data-dom-uuid="{{uuid}}">
+  <h5>Row options</h5>
+  <div class="options">
+
+    <div class="form-group">
+      <label>Bottom spacing
+        <input type="number" class="form-control" min="0" max="5" value="0" data-config-id="margin-bottom">
+      </label>
+    </div>
+
+
+    <div class="form-group" data-config-id="structure">
+      <h5>Structure</h5>
+
+      {{#if structures}}
+        <p>Resize the browser to see changes</p>
+
+        <div class="structure-group">
+          {{#each breakpoints}}
+            <div class="brk-wrapper">
+              <h2>{{this.label}} ({{trim this.value}})</h2>
+
+              <div>
+                {{#each ../structures}}
+                  <label class="m-0">
+                    <input
+                        type="radio"
+                        value="{{this.distribution}}"
+                        data-breakpoint="{{../key}}"
+                        name="structure_{{../key}}"
+                        {{#if this.default}}checked="checked"{{/if}}
+                    >
+                    {{this.label}}
+                  </label>
+                {{/each}}
+              </div>
+            </div>
+          {{/each}}
+
+        </div>
+      {{else}}
+        <h1>Este row no tiene configuacion de estructuras de columnas</h1>
+      {{/if}}
+
+    </div>
+
+
+    <div class="form-group mb-0">
+      <button
+          type="button"
+          class="btn btn-danger btn-block"
+          data-config-id="remove-row"
+      >Remove this row
+      </button>
+    </div>
+
+  </div>
+</div>

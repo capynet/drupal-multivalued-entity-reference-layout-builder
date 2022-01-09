@@ -1,0 +1,28 @@
+[data-pel-sidebar] {
+
+  ul.zone-tabs {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .zone-contents {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100% - 115px);
+    > * {
+      display: none;
+
+      &.open {
+        display: block;
+      }
+    }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+  }
+}

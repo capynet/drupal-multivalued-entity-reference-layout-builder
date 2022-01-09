@@ -1,0 +1,60 @@
+ul[data-config-element-trigger] {
+  position: absolute;
+  right: 0;
+  color: white;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  z-index: 1;
+
+  > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 22px;
+    background: #71d7f7;
+
+    > span {
+      cursor: pointer;
+    }
+  }
+
+}
+
+
+ul[data-config-element-trigger="row"] {
+  top: 12px;
+  right: 0;
+}
+
+ul[data-config-element-trigger="component"] {
+  left: 0;
+  right: unset;
+}
+
+ul[data-config-element-trigger="col"] {
+  left: 0;
+  top: unset;
+  right: unset;
+  bottom: 0;
+  display: none;
+}
+
+// Helper to allow us show cof for cols on hover.
+.live-layout {
+  > .row {
+    > .col {
+      &:hover {
+        outline: 1px solid $color-main;
+        ul[data-config-element-trigger] {
+          display: block;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,44 @@
+<div class="pel-rendered-layout-wrapper twb-container-fluid">
+  {% for row in layout %}
+    {% set rowClasses = [ row.conf.marginBottom ? 'mb-' ~ row.conf.marginBottom ] %}
+    {% set colsClasses = [] %}
+
+    {# Process all col related classes#}
+    {% for col in 1..row.conf.cols %}
+      {% set colClasses = ['col'] %}
+
+      {# Add structure for cols #}
+      {% for brk, structure in col.conf.rowStructure %}
+        {% if structure == 'equal' %}
+          {% set colClasses = colClasses|merge(['col-' ~ brk]) %}
+        {% else %}
+          {% set distribution = structure|split('_') %}
+          {% set colClasses = colClasses|merge(['col-' ~ brk ~ '-' ~ distribution[loop.index0]]) %}
+        {% endif %}
+      {% endfor %}
+
+      {# Add col specific config #}
+      {% for gutter in row.cols[loop.index0].conf.noGutter %}
+        {% set colClasses = colClasses|merge([gutter]) %}
+      {% endfor %}
+
+      {% set colsClasses = colsClasses|merge([colClasses]) %}
+    {% endfor %}
+
+    {# Print phase #}
+    <div class="row {{ rowClasses|join(' ') }}">
+
+      {% for col in 1..row.conf.cols %}
+        <div class="{{ colsClasses[loop.index0]|join(' ') }}">
+
+          {% for componentObj in row.cols[loop.index0].components %}
+            <div class="component-wrapper {{ componentObj.conf.marginBottom ? 'mb-' ~ componentObj.conf.marginBottom }}">
+              {{ components[componentObj.id] }}
+            </div>
+          {% endfor %}
+
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>

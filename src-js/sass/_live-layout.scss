@@ -1,0 +1,50 @@
+
+.sortable-drag {
+  opacity: 1 !important;
+}
+
+.live-layout {
+  outline: 1px solid grey;
+  min-height: 100px;
+
+  // Rows
+  > * {
+    outline: 5px solid transparent;
+    transition: outline-color 150ms;
+
+    &.sortable-chosen {
+      min-height: 100px;
+      background: wheat;
+      margin-right: -15px;
+      margin-left: -15px;
+      opacity: 1;
+
+      > span {
+        display: none !important;
+      }
+
+      > svg {
+        display: none !important;
+      }
+    }
+  }
+
+  > .row {
+    position: relative;
+
+    > .col {
+      min-height: 100px;
+      outline: 1px dotted grey;
+
+      // Avoid components interaction.
+      [data-component-id] {
+        position: relative;
+
+        > *:not([data-config-element-trigger]) {
+          pointer-events: none;
+        }
+
+      }
+    }
+  }
+}

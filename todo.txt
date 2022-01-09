@@ -1,0 +1,14 @@
+- revisar @todos.
+- El boton de edicion que esté mas integrado.
+- La vista previa de los componentes es un problemon.
+- añadir opcion standalone (solo se carga el nodo en una pantalla aislada sin mas regiones)
+- El live layout se pinta en data-live-layout-placeholder pero este no está debajo de un padre comun. Necesito meter todo que cuelgue debajo del wrapper de listado de paragraphs para que pueda haber mas de una instancia.
+- estoy usando selectores como twb-container-fluid en lugar de twb-container-fluid. Esto tiene que ser configurable (nombres de cols, rows, containers)
+- Para la vista mobile si pudiera redimensionar todo el navegador como se hace con el chrome inspector sería lo mas.
+- Ahora que los componentes ya no están en un listado para ser colocados, necesitaría checkear que pasa cuando se elimina un paragraph asegurarme que el layout sigue consistente.
+- Necesito test para probar todas las acciones.
+- Para la configuracion de una fila: Ahora voy a poner una suerte de miniatura mostrando la fila y las columnas que hay dentro. Al marcar una columna (on off) se puede regular sus opciones, si no hay columnas seleccionadas entonces la conf de la columna es la que va. Voy a resaltar la col o el row en la miniatura para que quede claro. De hecho una conexion visual y or colores relacionando lo seleccionado y su form de conf estaría mejor.
+- Documentar los handlebars indicando que significa cada atributo especial como "data-config-id" o "data-yield-to"
+- Default conf y element conf podrían ser lo mismo. Sono necesito convertir el defconf que se setea en php A UN SIMPLE ELEMENT CONF. asi simplificaría todo.
+- Para dar soporte de multiples campos paragraph multivalued hay que modificar el third party widget + los lugares de php y js donde se lo usa. Ahora mismo todo apunta a un solo campo en todo el nodo.
+- Se puede generalizar la solución para que funque con cualquier tipo de entidad?.

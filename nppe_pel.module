@@ -1,0 +1,265 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for paragraphs_entity_layout module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
+use Drupal\node\NodeTypeInterface;
+use Drupal\nppe_pel\NppePelRenderer;
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function nppe_pel_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  // Add a 'NPPE PEL Layout' base field to all node types.
+  if ($entity_type->id() === 'node') {
+    $fields['nppe_pel_layout'] = BaseFieldDefinition::create('string_long')
+      ->setLabel(t('NPPE PEL Layout'))
+      ->setDescription(t('The NPPE PEL layout information, if any.'))
+      ->setRevisionable(TRUE)
+      ->setTranslatable(FALSE)
+      ->setDisplayOptions('form', [
+        'type' => 'hidden',
+      ])
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayOptions('view', [
+        'type' => 'hidden',
+      ])
+      ->setDisplayConfigurable('view', FALSE);
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_node_view()
+ */
+function nppe_pel_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+  if ($view_mode === 'full') {
+    \Drupal::classResolver(NppePelRenderer::class)->buildView($build, $node);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function nppe_pel_theme($existing, $type, $theme, $path) {
+  return [
+    'pel_builder' => [
+      'variables' => [
+        'sidebar' => '',
+      ],
+    ],
+    'pel_builder_sidebar' => [
+      'variables' => [
+      ],
+    ],
+    'pel_builder_rendered_layout' => [
+      'variables' => [
+        'layout' => [],
+        'components' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for \Drupal\node\NodeTypeForm.
+ *
+ * Adds PEL options to the node type form.
+ *
+ * @see NodeTypeForm::form()
+ * @see nppe_pel_form_node_type_form_submit()
+ */
+function nppe_pel_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\node\NodeTypeInterface $type */
+  $type = $form_state->getFormObject()->getEntity();
+  $options = _nppe_pel_get_field_options($type);
+
+  $form['pel'] = [
+    '#type' => 'details',
+    '#title' => t('PEL settings'),
+    '#tree' => TRUE,
+    '#group' => 'additional_settings',
+  ];
+
+  if (empty($options)) {
+    $form['pel']['markup'] = [
+      '#markup' => t('There are no fields to process with PEL.'),
+    ];
+    $form['pel']['enabled'] = [
+      '#type' => 'value',
+      '#value' => FALSE,
+    ];
+  }
+  else {
+    $form['pel']['enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Enabled'),
+      '#default_value' => $type->getThirdPartySetting('nppe_pel', 'enabled'),
+      '#description' => t('Enable PEL support for this content type.'),
+    ];
+
+    $form['pel']['field_name'] = [
+      '#type' => 'select',
+      '#title' => t('Default parent item'),
+      '#default_value' => $type->getThirdPartySetting('nppe_pel', 'field_name'),
+      '#options' => $options,
+      '#description' => t('Choose the paragraph field to add PEL support.'),
+      '#states' => [
+        'invisible' => [
+          'input[name="pel[enabled]"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+  }
+
+  $form['#validate'][] = 'nppe_pel_form_node_type_form_validate';
+  $form['#entity_builders'][] = 'nppe_pel_form_node_type_form_builder';
+}
+
+/**
+ * Validate handler for forms with PEL options.
+ *
+ * @see nppe_pel_form_node_type_form_alter()
+ */
+function nppe_pel_form_node_type_form_validate(&$form, FormStateInterface $form_state) {
+  // Clear the field name if the support has been disabled.
+  if (empty($form_state->getValue(['pel', 'enabled']))) {
+    $form_state->setValue(['pel', 'field_name'], '');
+  }
+}
+
+/**
+ * Entity builder for the node type form with PEL options.
+ *
+ * @see nppe_pel_form_node_type_form_alter()
+ */
+function nppe_pel_form_node_type_form_builder($entity_type, NodeTypeInterface $type, &$form, FormStateInterface $form_state) {
+  $type->setThirdPartySetting('nppe_pel', 'enabled', $form_state->getValue(['pel', 'enabled']));
+  $type->setThirdPartySetting('nppe_pel', 'field_name', $form_state->getValue(['pel', 'field_name']));
+}
+
+/**
+ * Helper function to get the list of paragraph fields in a given content type.
+ *
+ * @param \Drupal\node\NodeTypeInterface $type
+ *   The node type to extract the fields from.
+ *
+ * @return array
+ *   The list of paragraph fields declaredin the given content type.
+ */
+function _nppe_pel_get_field_options(NodeTypeInterface $type) {
+  /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $field_manager */
+  $field_manager = \Drupal::service('entity_field.manager');
+  $fields = $field_manager->getFieldDefinitions('node', $type->id());
+  $options = [];
+  foreach ($fields as $id => $field) {
+    if ($field instanceof FieldConfig && ($field->getType() === 'entity_reference' || $field->getType() === 'entity_reference_revisions') && $field->getFieldStorageDefinition()->isMultiple()) {
+      $options[$id] = $field->getLabel();
+    }
+  }
+  return $options;
+}
+
+
+/**
+ * Implements hook_ENTITY_presave().
+ *
+ * If the saved entity has a layout attached we check if some
+ * referenced element was deleted and allocated on the layout.
+ * In that case we remove it from the layout too.
+ */
+function nppe_pel_entity_presave(EntityInterface $entity) {
+  $bundle_type = $entity->getEntityType()->getBundleEntityType();
+
+  if (is_null($bundle_type) || $entity->isNew()) {
+    return;
+  }
+
+  $entity_type = \Drupal::entityTypeManager()->getStorage($bundle_type)->load($entity->bundle());
+
+  if (is_null($entity_type)) {
+    return;
+  }
+
+  $pel_enabled = (bool) $entity_type->getThirdPartySetting('nppe_pel', 'enabled', FALSE);
+  $pel_field_name = $entity_type->getThirdPartySetting('nppe_pel', 'field_name', '');
+  $json_been_modified = FALSE;
+
+  if (!$pel_enabled || empty($pel_field_name)) {
+    return;
+  }
+
+  if (!$entity->nppe_pel_layout->isEmpty()) {
+    $json = JSON::decode($entity->nppe_pel_layout->value);
+
+    foreach ($json as $k_row => $row) {
+      foreach ($row['cols'] as $k_col => $col) {
+        if (!in_array('empty', $col['components'], TRUE)) {
+          foreach ($col['components'] as $k_component => $component) {
+            $stored_component_id = $component['id'];
+            $exists = _nppe_pel_check_component_still_exist(
+              $stored_component_id,
+              $entity->{$pel_field_name}->getValue()
+            );
+
+            if (!$exists) {
+              $json_been_modified = TRUE;
+              unset($json[$k_row]['cols'][$k_col]['components'][$k_component]);
+
+              if (empty($json[$k_row]['cols'][$k_col]['components'])) {
+                $json[$k_row]['cols'][$k_col]['components'] = ['empty'];
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+    if ($json_been_modified) {
+      $entity->nppe_pel_layout->value = JSON::encode($json);
+    }
+  }
+
+}
+
+/**
+ * Checks if a component id is on the entity referenced items.
+ *
+ * @param string $entity_uuid
+ *   Needle
+ * @param array $available_referenced_entities
+ *  Haystack
+ *
+ * @return bool
+ */
+function _nppe_pel_check_component_still_exist($entity_uuid, $available_referenced_entities) {
+  $entity = \Drupal::service('entity.repository')->loadEntityByUuid('paragraph', $entity_uuid);
+
+  foreach ($available_referenced_entities as $item) {
+    $found = $item["target_id"] == $entity->id();
+
+    if ($found) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}

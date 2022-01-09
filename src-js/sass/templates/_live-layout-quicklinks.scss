@@ -1,0 +1,15 @@
+.live-layout-quicklinks {
+  position: fixed;
+  bottom: 0;
+  left: -260px;
+  padding: 10px;
+  background: rgba(188, 188, 188, 0.5);
+  white-space: nowrap;
+  transition: left 400ms;
+  transition-delay: 400ms;
+  display: inline-block;
+
+  &.open {
+    left: 0 !important;
+  }
+}

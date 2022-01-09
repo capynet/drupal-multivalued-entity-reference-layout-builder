@@ -1,0 +1,13 @@
+nppe_pel.save_layout:
+  path: '/pel/layout/{entity_type}/{entity}'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\nppe_pel\Controller\NppePelController::storeLayout'
+    _title: 'Save layout'
+  requirements:
+    _permission: 'use layout builder'
+    _entity_access: 'entity.update'
+  options:
+    parameters:
+      entity:
+        type: entity:{entity_type}

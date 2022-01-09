@@ -1,0 +1,112 @@
+{
+  "available_rows": [
+    {
+      "cols": 1,
+      "label": "1 cols row",
+      "icon": "img/icons/row-1-cols.svg"
+    },
+    {
+      "cols": 2,
+      "label": "2 cols row",
+      "icon": "img/icons/row-2-cols.svg"
+    },
+    {
+      "cols": 3,
+      "label": "3 cols row",
+      "icon": "img/icons/row-3-cols.svg"
+    },
+    {
+      "cols": 4,
+      "label": "4 cols row",
+      "icon": "img/icons/row-4-cols.svg"
+    },
+    {
+      "cols": 5,
+      "label": "5 cols row",
+      "icon": "img/icons/row-5-cols.svg"
+    },
+    {
+      "cols": 6,
+      "label": "6 cols row",
+      "icon": "img/icons/row-6-cols.svg"
+    }
+  ],
+  "row_structures": {
+    "cols_1": [],
+    "cols_2": [
+      {
+        "distribution": "equal",
+        "label": "Equally distributed",
+        "default": true
+      },
+      {
+        "distribution": "12_12",
+        "label": "Stacked"
+      },
+      {
+        "distribution": "3_9",
+        "label": "33% / 66%"
+      },
+      {
+        "distribution": "9_3",
+        "label": "66% / 33%"
+      }
+    ],
+    "cols_3": [
+      {
+        "distribution": "equal",
+        "label": "Equally distributed",
+        "default": true
+      },
+      {
+        "distribution": "12_12_12",
+        "label": "Stacked"
+      },
+      {
+        "distribution": "6_6_12",
+        "label": "50% / 50% / 100%"
+      },
+      {
+        "distribution": "12_6_6",
+        "label": "100% / 50% / 50%"
+      }
+    ],
+    "cols_4": [
+      {
+        "distribution": "equal",
+        "label": "Equally distributed",
+        "default": true
+      },
+      {
+        "distribution": "12_12_12_12",
+        "label": "Stacked"
+      }
+    ],
+    "cols_5": [
+      {
+        "distribution": "equal",
+        "label": "Equally distributed",
+        "default": true
+      },
+      {
+        "distribution": "12_3_3_3_3",
+        "label": "100% / 25% / 25% / 25% / 25%"
+      },
+      {
+        "distribution": "12_12_12_12_12",
+        "label": "Stacked"
+      }
+    ],
+    "cols_6": [
+      {
+        "distribution": "equal",
+        "label": "Equally distributed",
+        "default": true
+      },
+      {
+        "distribution": "12_12_12_12_12_12",
+        "label": "Stacked"
+      }
+    ]
+  }
+}
