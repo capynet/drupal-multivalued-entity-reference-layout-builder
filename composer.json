@@ -1,6 +1,5 @@
 {
     "name": "drupal/paragraphs-layout-builder",
-    "description": "Adds in-situ layout builder.",
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",
     "require": {
