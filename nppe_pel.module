@@ -101,7 +101,7 @@ function nppe_pel_form_node_type_form_alter(&$form, FormStateInterface $form_sta
 
   if (empty($options)) {
     $form['pel']['markup'] = [
-      '#markup' => t('There are no fields to process with PEL.'),
+      '#markup' => t('There are no fields to process. Please add a multivalued paragraph field.'),
     ];
     $form['pel']['enabled'] = [
       '#type' => 'value',
