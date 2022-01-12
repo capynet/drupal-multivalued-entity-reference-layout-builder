@@ -35,11 +35,11 @@ function nppe_pel_entity_base_field_info(EntityTypeInterface $entity_type) {
       ->setRevisionable(TRUE)
       ->setTranslatable(FALSE)
       ->setDisplayOptions('form', [
-        'type' => 'hidden',
+        'region' => 'hidden',
       ])
       ->setDisplayConfigurable('form', FALSE)
       ->setDisplayOptions('view', [
-        'type' => 'hidden',
+        'region' => 'hidden',
       ])
       ->setDisplayConfigurable('view', FALSE);
   }
