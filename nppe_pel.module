@@ -94,7 +94,7 @@ function nppe_pel_form_node_type_form_alter(&$form, FormStateInterface $form_sta
 
   $form['pel'] = [
     '#type' => 'details',
-    '#title' => t('PEL settings'),
+    '#title' => t('Paragraph field layout builder'),
     '#tree' => TRUE,
     '#group' => 'additional_settings',
   ];
