@@ -7,6 +7,7 @@
       ghost-class="ghost"
       @start="dragging = true"
       @end="dragging = false"
+      group="cell"
     >
       <template #item="{ element }">
         <div class="lc-field">{{ element.label }}</div>
