@@ -1,0 +1,24 @@
+{
+  "canvasFields": [
+    { "name": "Ya existente 1", "cols": 1 },
+    { "name": "Ya existente 2", "cols": 2 }
+  ],
+  "availableFields": [
+    { "name": "1 col", "cols": 1 },
+    { "name": "2 cols", "cols": 2 },
+    { "name": "3 cols", "cols": 3 },
+    { "name": "4 cols", "cols": 4 },
+    { "name": "6 cols", "cols": 6 },
+    { "name": "12 cols", "cols": 12 }
+  ],
+  "components": [
+    {
+      "id": "slider-1",
+      "label": "Slider hero"
+    },
+    {
+      "id": "image-with-text-2",
+      "label": "Image of people dancing with an intro"
+    }
+  ]
+}
