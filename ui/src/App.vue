@@ -1,10 +1,10 @@
 <template>
   <main class="skeleton">
     <div class="sidebar">
-      <h2>Available components</h2>
-      <AvailableComponents />
       <h2>Available fields</h2>
       <AvailableFields />
+      <h2>Available components</h2>
+      <AvailableComponents />
     </div>
     <div class="content">
       <LayoutCanvas />

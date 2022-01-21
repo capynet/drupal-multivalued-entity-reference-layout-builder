@@ -9,7 +9,7 @@
     group="layout"
   >
     <template #item="{ element }">
-      <div class="lc-field">{{ element.name }} - {{ element.cols }}</div>
+      <DOMField :data="element" />
     </template>
   </draggable>
 
@@ -19,6 +19,7 @@
 <script>
   import draggable from "vuedraggable";
   import RawJson from "./RawJson.vue";
+  import DOMField from "./DOMField.vue";
 
   export default {
     name: "layoutCanvas",
@@ -27,6 +28,7 @@
     components: {
       draggable,
       RawJson,
+      DOMField,
     },
 
     data() {
@@ -52,10 +54,5 @@
 
   .layout-canvas {
     border: 1px solid purple;
-  }
-
-  .lc-field {
-    border: 1px solid black;
-    padding: 10px;
   }
 </style>
