@@ -2,33 +2,50 @@
   "canvasFields": [
     {
       "label": "2 cols",
-      "cols": [[], []]
+      "cols": 2,
+      "components": []
+    },
+    {
+      "label": "2 colsa",
+      "cols": 2,
+      "components": []
+    },
+    {
+      "label": "12 cols",
+      "cols": 12,
+      "components": []
     }
   ],
   "availableFields": [
     {
       "label": "1 col",
-      "cols": [[]]
+      "cols": 1,
+      "components": []
     },
     {
       "label": "2 cols",
-      "cols": [[], []]
+      "cols": 2,
+      "components": []
     },
     {
       "label": "3 cols",
-      "cols": [[], [], []]
+      "cols": 3,
+      "components": []
     },
     {
       "label": "4 cols",
-      "cols": [[], [], [], []]
+      "cols": 4,
+      "components": []
     },
     {
       "label": "6 cols",
-      "cols": [[], [], [], [], [], []]
+      "cols": 6,
+      "components": []
     },
     {
       "label": "12 cols",
-      "cols": [[], [], [], [], [], [], [], [], [], [], [], []]
+      "cols": 12,
+      "components": []
     }
   ],
   "components": [

@@ -41,7 +41,14 @@
     mounted() {
       fetch("http://localhost:3000/canvasFields")
         .then((res) => res.json())
-        .then((data) => (this.canvasFields = data));
+        .then((data) => {
+          // We need to "hydrate" component slots.
+          data.forEach((el) => {
+            el.components = Array.from({ length: el.cols }, () => []);
+          });
+
+          this.canvasFields = data;
+        });
     },
   };
 </script>

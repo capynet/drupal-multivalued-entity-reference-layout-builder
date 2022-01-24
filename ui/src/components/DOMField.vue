@@ -1,8 +1,8 @@
 <template>
   <div class="lc-field">
-    <div v-for="col in data.cols" :key="col">
+    <div v-for="i in data.cols" :key="i">
       <draggable
-        :list="col"
+        :list="data.components[i - 1]"
         item-key="cell"
         class="cell-components"
         ghost-class="ghost"
@@ -38,7 +38,6 @@
 
     data() {
       return {
-        //cellComponents: Array.from({ length: 12 }, () => []),
         dragging: false,
       };
     },

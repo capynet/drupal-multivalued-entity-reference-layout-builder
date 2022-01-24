@@ -37,7 +37,14 @@
     mounted() {
       fetch("http://localhost:3000/availableFields")
         .then((res) => res.json())
-        .then((data) => (this.availableFields = data));
+        .then((data) => {
+          // We need to "hydrate" component slots.
+          data.forEach((el) => {
+            el.components = Array.from({ length: el.cols }, () => []);
+          });
+
+          this.availableFields = data;
+        });
     },
   };
 </script>
