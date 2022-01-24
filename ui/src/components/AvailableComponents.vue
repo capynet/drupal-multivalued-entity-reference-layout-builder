@@ -2,8 +2,8 @@
   <section class="available-components">
     <draggable
       :list="components"
-      item-key="cols"
-      class="list-group"
+      item-key="components"
+      class="draggable-available-components"
       ghost-class="ghost"
       @start="dragging = true"
       @end="dragging = false"

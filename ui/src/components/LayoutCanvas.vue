@@ -1,19 +1,19 @@
 <template>
   <draggable
-    :list="canvasFields"
-    item-key="cols"
-    class="layout-canvas"
+    :list="layout.rows"
+    item-key="rows"
+    class="draggable-rows"
     ghost-class="ghost"
     @start="dragging = true"
     @end="dragging = false"
-    group="layout"
+    :group="{ name: 'layout', pull: 'clone', put: false }"
   >
     <template #item="{ element }">
-      <DOMField :data="element" />
+      <DOMField :row="element" />
     </template>
   </draggable>
 
-  <RawJson :data="canvasFields" title="Layout builder composition" />
+  <RawJson :data="layout" title="Layout builder composition" />
 </template>
 
 <script>
@@ -33,22 +33,15 @@
 
     data() {
       return {
-        canvasFields: [],
+        layout: {},
         dragging: false,
       };
     },
 
     mounted() {
-      fetch("http://localhost:3000/canvasFields")
+      fetch("http://localhost:3000/layout")
         .then((res) => res.json())
-        .then((data) => {
-          // We need to "hydrate" component slots.
-          data.forEach((el) => {
-            el.components = Array.from({ length: el.cols }, () => []);
-          });
-
-          this.canvasFields = data;
-        });
+        .then((data) => (this.layout = data));
     },
   };
 </script>

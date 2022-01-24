@@ -1,53 +1,38 @@
 {
-  "canvasFields": [
-    {
-      "label": "2 cols",
-      "cols": 2,
-      "components": []
-    },
-    {
-      "label": "2 colsa",
-      "cols": 2,
-      "components": []
-    },
-    {
-      "label": "12 cols",
-      "cols": 12,
-      "components": []
-    }
-  ],
-  "availableFields": [
-    {
-      "label": "1 col",
-      "cols": 1,
-      "components": []
-    },
-    {
-      "label": "2 cols",
-      "cols": 2,
-      "components": []
-    },
-    {
-      "label": "3 cols",
-      "cols": 3,
-      "components": []
-    },
-    {
-      "label": "4 cols",
-      "cols": 4,
-      "components": []
-    },
-    {
-      "label": "6 cols",
-      "cols": 6,
-      "components": []
-    },
-    {
-      "label": "12 cols",
-      "cols": 12,
-      "components": []
-    }
-  ],
+  "layout": {
+    "cellsPositioning": "center",
+    "rows": [
+      {
+        "cols": [
+          {
+            "components": [],
+            "cellPositioning": "center"
+          },
+          {
+            "components": [],
+            "cellPositioning": "auto"
+          },
+          {
+            "components": [],
+            "cellPositioning": "auto"
+          }
+        ]
+      },
+      {
+        "cols": [
+          {
+            "components": [],
+            "contentPositioning": "center"
+          },
+          {
+            "components": [],
+            "cellPositioning": "auto"
+          }
+        ]
+      }
+    ]
+  },
+
   "components": [
     {
       "id": "slider-1",

@@ -1,8 +1,6 @@
 <template>
   <main class="skeleton">
     <div class="sidebar">
-      <h2>Available fields</h2>
-      <AvailableFields />
       <h2>Available components</h2>
       <AvailableComponents />
     </div>
@@ -14,14 +12,12 @@
 
 <script>
   import AvailableComponents from "./components/AvailableComponents.vue";
-  import AvailableFields from "./components/AvailableFields.vue";
   import LayoutCanvas from "./components/LayoutCanvas.vue";
 
   export default {
     name: "Layout builder",
     components: {
       AvailableComponents,
-      AvailableFields,
       LayoutCanvas,
     },
   };
