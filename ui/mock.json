@@ -1,15 +1,35 @@
 {
   "canvasFields": [
-    { "name": "Ya existente 1", "cols": 1 },
-    { "name": "Ya existente 2", "cols": 2 }
+    {
+      "label": "2 cols",
+      "cols": [[], []]
+    }
   ],
   "availableFields": [
-    { "name": "1 col", "cols": 1 },
-    { "name": "2 cols", "cols": 2 },
-    { "name": "3 cols", "cols": 3 },
-    { "name": "4 cols", "cols": 4 },
-    { "name": "6 cols", "cols": 6 },
-    { "name": "12 cols", "cols": 12 }
+    {
+      "label": "1 col",
+      "cols": [[]]
+    },
+    {
+      "label": "2 cols",
+      "cols": [[], []]
+    },
+    {
+      "label": "3 cols",
+      "cols": [[], [], []]
+    },
+    {
+      "label": "4 cols",
+      "cols": [[], [], [], []]
+    },
+    {
+      "label": "6 cols",
+      "cols": [[], [], [], [], [], []]
+    },
+    {
+      "label": "12 cols",
+      "cols": [[], [], [], [], [], [], [], [], [], [], [], []]
+    }
   ],
   "components": [
     {

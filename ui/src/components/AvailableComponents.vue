@@ -10,7 +10,7 @@
       group="cell"
     >
       <template #item="{ element }">
-        <div class="lc-field">{{ element.label }}</div>
+        <div class="lc-component">{{ element.label }}</div>
       </template>
     </draggable>
   </section>
@@ -43,8 +43,8 @@
 </script>
 
 <style scoped>
-  .lc-field {
-    border: 1px solid black;
+  .lc-component {
+    border: 1px solid red;
     padding: 10px;
   }
 </style>

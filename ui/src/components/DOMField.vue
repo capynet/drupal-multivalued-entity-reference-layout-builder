@@ -1,8 +1,8 @@
 <template>
   <div class="lc-field">
-    <div v-for="i in data.cols" :key="i">
+    <div v-for="col in data.cols" :key="col">
       <draggable
-        :list="cellComponents[i - 1]"
+        :list="col"
         item-key="cell"
         class="cell-components"
         ghost-class="ghost"
@@ -11,13 +11,12 @@
         group="cell"
       >
         <template #item="{ element }">
-          <div class="cell-element">{{ element.id }}</div>
+          <div class="cell-element">{{ element.label }}</div>
         </template>
       </draggable>
     </div>
+    <!-- <RawJson :data="data" title="Field structure" /> -->
   </div>
-
-  <RawJson :data="cellComponents" title="Field structure" />
 </template>
 
 <script>
@@ -39,7 +38,7 @@
 
     data() {
       return {
-        cellComponents: [[], [], [], [], [], [], [], [], [], [], [], []],
+        //cellComponents: Array.from({ length: 12 }, () => []),
         dragging: false,
       };
     },

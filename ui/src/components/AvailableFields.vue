@@ -10,7 +10,7 @@
       :group="{ name: 'layout', pull: 'clone', put: false }"
     >
       <template #item="{ element }">
-        <div class="lc-field">{{ element.name }} - {{ element.cols }}</div>
+        <div class="lc-field">{{ element.label }}</div>
       </template>
     </draggable>
   </section>
