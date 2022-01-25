@@ -13,7 +13,9 @@
           @end="dragging = false"
           group="cell"
         >
-          <template #item="{ element }">{{ element.label }}</template>
+          <template #item="{ element }">
+            <div class="lc-component">{{ element.label }}</div>
+          </template>
         </draggable>
 
         <!-- <RawJson :data="col" title="Raw col" /> -->
@@ -51,32 +53,41 @@ export default {
 };
 </script>
 
-<style scoped>
-.lc-field {
-  display: flex;
-}
-
-.lc-field > * {
-  border: 1px solid black;
-  padding: 10px;
-  flex: 1 1 0px;
-  min-height: 20px;
-}
-
+<style scoped lang="scss">
 .ghost {
   opacity: 0.5;
   background: #369;
 }
 
-.cell-components {
-  min-height: 30px;
-  width: 100%;
-  background: #ebebeb;
-}
-
 .row-wrapper {
   position: relative;
   z-index: 0;
+
+  &:hover {
+    z-index: 1;
+
+    .add-row {
+      display: inline-block;
+    }
+  }
+
+  .lc-field {
+    display: flex;
+
+    // Columns.
+    > * {
+      border: 1px solid $color-blue;
+      padding: 10px;
+      flex: 1 1 0px;
+      min-height: 20px;
+
+      .cell-components {
+        min-height: 30px;
+        width: 100%;
+        background: #e4a8a8;
+      }
+    }
+  }
 }
 
 .add-row {
@@ -84,23 +95,14 @@ export default {
   position: absolute;
   left: 50%;
   z-index: 0;
-}
 
-.add-row[data-pos="before"] {
-  top: 0;
-  transform: translate(-50%, -50%);
-}
-
-.add-row[data-pos="after"] {
-  bottom: 0;
-  transform: translate(-50%, 50%);
-}
-
-.row-wrapper:hover {
-  z-index: 1;
-}
-
-.row-wrapper:hover .add-row {
-  display: inline-block;
+  &[data-pos="before"] {
+    top: 0;
+    transform: translate(-50%, -50%);
+  }
+  &[data-pos="after"] {
+    bottom: 0;
+    transform: translate(-50%, 50%);
+  }
 }
 </style>

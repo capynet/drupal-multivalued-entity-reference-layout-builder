@@ -6,6 +6,7 @@
     ghost-class="ghost"
     @start="dragging = true"
     @end="dragging = false"
+    direction="vertical"
     :group="{ name: 'layout', pull: 'clone', put: false }"
   >
     <template #item="{ element, index }">
@@ -45,7 +46,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .ghost {
   opacity: 0.5;
   background: #369;

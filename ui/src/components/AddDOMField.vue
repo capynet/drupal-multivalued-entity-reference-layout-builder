@@ -45,20 +45,22 @@ export default {
 };
 </script>
 
-<style scoped>
-.add-row a {
-  background: red;
-  color: white;
-  text-decoration: none;
-  padding: 3px;
-}
+<style scoped lang="scss">
+.add-row {
+  a {
+    background: red;
+    color: white;
+    text-decoration: none;
+    padding: 3px;
 
-.add-row ul {
-  display: none;
-  position: absolute;
-}
+    &:hover + ul {
+      display: block;
+    }
+  }
 
-.add-row a:hover + ul {
-  display: block;
+  ul {
+    display: none;
+    position: absolute;
+  }
 }
 </style>

@@ -6,21 +6,21 @@
 </template>
 
 <script>
-  export default {
-    name: "rawJson",
-    display: "RawJSON",
+export default {
+  name: "rawJson",
+  display: "RawJSON",
 
-    props: {
-      title: String,
-      data: Object,
-    },
-  };
+  props: {
+    title: String,
+    data: Object,
+  },
+};
 </script>
 
-<style scoped>
-  .raw-data {
-    border: 1px solid blue;
-    margin: 0;
-    padding: 10px;
-  }
+<style scoped lang="scss">
+.raw-data {
+  border: 1px solid blue;
+  margin: 0;
+  padding: 10px;
+}
 </style>

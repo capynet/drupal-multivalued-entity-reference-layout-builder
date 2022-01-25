@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .lc-component {
   border: 1px solid red;
   padding: 10px;
