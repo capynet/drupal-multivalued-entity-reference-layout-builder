@@ -17,34 +17,34 @@
 </template>
 
 <script>
-  import draggable from "vuedraggable";
+import draggable from "vuedraggable";
 
-  export default {
-    name: "availableComponents",
-    display: "AvailableComponents",
+export default {
+  name: "availableComponents",
+  display: "AvailableComponents",
 
-    components: {
-      draggable,
-    },
+  components: {
+    draggable,
+  },
 
-    data() {
-      return {
-        components: [],
-        dragging: false,
-      };
-    },
+  data() {
+    return {
+      components: [],
+      dragging: false,
+    };
+  },
 
-    mounted() {
-      fetch("http://localhost:3000/components")
-        .then((res) => res.json())
-        .then((data) => (this.components = data));
-    },
-  };
+  mounted() {
+    fetch("http://localhost:3000/components")
+      .then((res) => res.json())
+      .then((data) => (this.components = data));
+  },
+};
 </script>
 
 <style scoped>
-  .lc-component {
-    border: 1px solid red;
-    padding: 10px;
-  }
+.lc-component {
+  border: 1px solid red;
+  padding: 10px;
+}
 </style>
