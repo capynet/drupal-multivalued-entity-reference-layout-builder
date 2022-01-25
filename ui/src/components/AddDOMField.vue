@@ -13,9 +13,19 @@
 </template>
 
 <script>
+import useLayout from "../store";
+
 export default {
   name: "AddDOMField",
   display: "addDOMField",
+
+  setup() {
+    const { addRow } = useLayout();
+
+    return {
+      addRow,
+    };
+  },
 
   props: {
     pos: String,
@@ -29,7 +39,7 @@ export default {
   methods: {
     add(e) {
       e.preventDefault();
-      console.log(this.row);
+      this.addRow();
     },
   },
 };

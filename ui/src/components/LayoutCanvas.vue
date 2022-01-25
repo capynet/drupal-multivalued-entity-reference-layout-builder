@@ -12,14 +12,12 @@
       <DOMField :row="element" />
     </template>
   </draggable>
-
-  <RawJson :data="layout" title="Layout builder composition" />
 </template>
 
 <script>
 import draggable from "vuedraggable";
-import RawJson from "./RawJson.vue";
 import DOMField from "./DOMField.vue";
+import useLayout from "../store";
 
 export default {
   name: "layoutCanvas",
@@ -27,22 +25,23 @@ export default {
 
   components: {
     draggable,
-    RawJson,
     DOMField,
+  },
+
+  setup() {
+    const { layout } = useLayout();
+
+    return {
+      layout,
+    };
   },
 
   data() {
     return {
-      layout: {},
       dragging: false,
     };
   },
 
-  mounted() {
-    fetch("http://localhost:3000/layout")
-      .then((res) => res.json())
-      .then((data) => (this.layout = data));
-  },
 };
 </script>
 
