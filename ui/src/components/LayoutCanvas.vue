@@ -8,8 +8,8 @@
     @end="dragging = false"
     :group="{ name: 'layout', pull: 'clone', put: false }"
   >
-    <template #item="{ element }">
-      <DOMField :row="element" />
+    <template #item="{ element, index }">
+      <DOMField :row="element" :index="index" />
     </template>
   </draggable>
 </template>

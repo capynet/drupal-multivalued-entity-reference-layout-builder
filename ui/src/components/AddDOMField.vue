@@ -1,5 +1,5 @@
 <template>
-  <div class="add-row" :data-pos="pos">
+  <div class="add-row" :data-pos="pos" :index="index">
     <a href="#" @click="add">Add a row</a>
     <!--   <ul> -->
     <!--     <li>1 col</li> -->
@@ -29,7 +29,7 @@ export default {
 
   props: {
     pos: String,
-    row: Object,
+    index: Number
   },
 
   data() {
@@ -39,7 +39,7 @@ export default {
   methods: {
     add(e) {
       e.preventDefault();
-      this.addRow();
+      this.addRow(this.pos, this.index);
     },
   },
 };

@@ -11,21 +11,28 @@ export default function useLayout() {
         state.layout = await (await fetch(url)).json();
     }
 
-    const addRow = () => {
+    const addRow = (pos, index) => {
         const rowTpl = {
             "cols": [
                 {
                     "components": [],
-                    "contentPositioning": "center"
+                    "contentPositioning": "bananas"
                 },
-                {
-                    "components": [],
-                    "cellPositioning": "auto"
-                }
             ]
         };
 
-        state.layout.rows.push(rowTpl);
+        let position;
+
+        switch (pos) {
+            case "before":
+                position = index;
+                break;
+            case "after":
+                position = index + 1;
+                break;
+        }
+
+        state.layout.rows.splice(position, 0, rowTpl);
     }
 
     return {

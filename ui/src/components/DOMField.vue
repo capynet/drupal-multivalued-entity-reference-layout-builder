@@ -1,6 +1,6 @@
 <template>
   <div class="row-wrapper">
-    <AddDOMField pos="before" :row="row" />
+    <AddDOMField pos="before" :index="index" />
 
     <div class="lc-field">
       <div v-for="col in row.cols" :key="col">
@@ -19,7 +19,7 @@
         <!-- <RawJson :data="col" title="Raw col" /> -->
       </div>
     </div>
-    <AddDOMField pos="after" :row="row" />
+    <AddDOMField pos="after" :index="index" />
   </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
 
   props: {
     row: Object,
+    index: Number,
   },
 
   data() {
