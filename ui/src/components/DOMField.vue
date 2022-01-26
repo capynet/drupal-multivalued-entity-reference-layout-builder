@@ -67,7 +67,7 @@ export default {
     z-index: 1;
 
     .add-row {
-      display: inline-block;
+      display: block;
     }
   }
 

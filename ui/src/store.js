@@ -11,25 +11,21 @@ export default function useLayout() {
         state.layout = await (await fetch(url)).json();
     }
 
-    const addRow = (pos, index) => {
-        const rowTpl = {
-            "cols": [
-                {
-                    "components": [],
-                    "contentPositioning": "bananas"
-                },
-            ]
-        };
+    /**
+      * Add a new field to the layout.
+      * 
+      * @param {String} pos Indicates if the field should be added before or after the current field.
+      * @param {Number} index Current field position used as reference.
+      * @param {Number} cols Number of columns to add.
+      */
+    const addRow = (pos, index, cols) => {
+        const position = index + (pos === 'after' ? 1 : 0)
+        const rowTpl = { "cols": [] };
 
-        let position;
-
-        switch (pos) {
-            case "before":
-                position = index;
-                break;
-            case "after":
-                position = index + 1;
-                break;
+        for (let i = 0; i < cols; i++) {
+            // colTpl must be inside the loop to avoid references to the same object.
+            const colTpl = { "components": [], "contentPositioning": "auto" };
+            rowTpl.cols.push(colTpl);
         }
 
         state.layout.rows.splice(position, 0, rowTpl);

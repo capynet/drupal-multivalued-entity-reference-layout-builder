@@ -1,14 +1,12 @@
 <template>
   <div class="add-row" :data-pos="pos" :index="index">
-    <a href="#" @click="add">Add a row</a>
-    <!--   <ul> -->
-    <!--     <li>1 col</li> -->
-    <!--     <li>2 col</li> -->
-    <!--     <li>3 col</li> -->
-    <!--     <li>4 col</li> -->
-    <!--     <li>6 col</li> -->
-    <!--     <li>12 col</li> -->
-    <!--   </ul> -->
+    <span>Add row {{ pos }}</span>
+
+    <ul>
+      <li v-for="item in possibleFields" :key="item">
+        <a href="#" @click="addRow(pos, index, item.value)">{{ item.label }}</a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -16,51 +14,80 @@
 import useLayout from "../store";
 
 export default {
-  name: "AddDOMField",
-  display: "addDOMField",
+  props: {
+    pos: String,
+    index: Number
+  },
 
   setup() {
     const { addRow } = useLayout();
 
     return {
       addRow,
+      possibleFields: [
+        { label: '1 cols', value: 1 },
+        { label: '2 cols', value: 2 },
+        { label: '3 cols', value: 3 },
+        { label: '4 cols', value: 4 },
+        { label: '6 cols', value: 6 },
+        { label: '12 cols', value: 12 },
+      ],
     };
   },
 
-  props: {
-    pos: String,
-    index: Number
-  },
-
-  data() {
-    return {};
-  },
-
-  methods: {
-    add(e) {
-      e.preventDefault();
-      this.addRow(this.pos, this.index);
-    },
-  },
 };
 </script>
 
 <style scoped lang="scss">
 .add-row {
-  a {
+  &:hover {
+    display: block;
+
+    ul {
+      display: flex;
+    }
+  }
+
+  &[data-pos="before"] {
+    ul {
+      bottom: 100%;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &[data-pos="after"] {
+    ul {
+      top: 100%;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  > span {
     background: red;
     color: white;
     text-decoration: none;
     padding: 3px;
-
-    &:hover + ul {
-      display: block;
-    }
+    display: block;
   }
 
   ul {
     display: none;
     position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    white-space: nowrap;
+    background: red;
+    left: 50%;
+    transform: translateX(-50%);
+
+    li {
+      display: block;
+      background: white;
+      border: 1px solid black;
+      padding: 3px;
+      margin: 0 5px;
+    }
   }
 }
 </style>

@@ -52,7 +52,8 @@ export default {
   background: #369;
 }
 
-.layout-canvas {
+.draggable-rows {
+  margin-top: 50px; // Temporal for development.
   border: 1px solid purple;
 }
 </style>
