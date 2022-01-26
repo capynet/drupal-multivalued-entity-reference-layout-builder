@@ -9,11 +9,18 @@
     "mock": "json-server --watch mock.json"
   },
   "dependencies": {
+    "@vicons/antd": "^0.11.0",
+    "@vicons/fa": "^0.11.0",
+    "@vicons/fluent": "^0.11.0",
+    "@vicons/ionicons4": "^0.11.0",
+    "@vicons/ionicons5": "^0.11.0",
+    "@vicons/material": "^0.11.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
+    "@vicons/utils": "^0.1.4",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -22,8 +29,10 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "json-server": "^0.17.0",
+    "naive-ui": "^2.24.6",
     "sass": "^1.49.0",
-    "sass-loader": "^10"
+    "sass-loader": "^10",
+    "vfonts": "^0.0.3"
   },
   "eslintConfig": {
     "root": true,
