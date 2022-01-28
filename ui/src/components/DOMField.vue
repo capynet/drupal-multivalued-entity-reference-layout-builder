@@ -2,7 +2,10 @@
   <div class="row-wrapper">
     <AddDOMField pos="before" :index="index" />
 
-    <div class="lc-field">
+    <div
+      class="lc-field lb-grid"
+      :style="`grid-template-columns: repeat(${this.row.cols.length}, 1fr);`"
+    >
       <div v-for="col in row.cols" :key="col">
         <draggable
           :list="col.components"
@@ -47,7 +50,7 @@ export default {
 
   data() {
     return {
-      dragging: false,
+      dragging: false
     };
   },
 };
@@ -72,13 +75,9 @@ export default {
   }
 
   .lc-field {
-    display: flex;
-
     // Columns.
     > * {
       border: 1px solid $color-blue;
-      padding: 10px;
-      flex: 1 1 0px;
       min-height: 20px;
 
       .cell-components {
