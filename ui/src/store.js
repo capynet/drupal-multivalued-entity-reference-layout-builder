@@ -24,7 +24,7 @@ export default function useLayout() {
 
         for (let i = 0; i < cols; i++) {
             // colTpl must be inside the loop to avoid references to the same object.
-            const colTpl = { "components": [], "contentPositioning": "auto" };
+            const colTpl = { "components": [] };
             rowTpl.cols.push(colTpl);
         }
 

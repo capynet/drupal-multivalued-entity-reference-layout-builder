@@ -10,7 +10,7 @@
       group="cell"
     >
       <template #item="{ element }">
-        <div class="lc-component">{{ element.label }}</div>
+        <div class="lc-component" v-html="element.preview || element.label"></div>
       </template>
     </draggable>
   </section>
