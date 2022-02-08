@@ -1,4 +1,4 @@
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, getCurrentInstance } from "vue";
 
 const url = 'http://localhost:3000/layout';
 
@@ -6,9 +6,16 @@ const state = reactive({
     layout: [],
 });
 
-export default function useLayout() {
+export default function stateStore() {
     const fetchLayout = async () => {
-        state.layout = await (await fetch(url)).json();
+        const instance = getCurrentInstance()
+        const plbConf = instance.appContext.config.globalProperties.plb;
+
+        if (plbConf === undefined) {
+            state.layout = await (await fetch(url)).json();
+        } else {
+            state.layout = await (plbConf.layout);
+        }
     }
 
     /**

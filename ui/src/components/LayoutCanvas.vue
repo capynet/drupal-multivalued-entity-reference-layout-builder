@@ -18,7 +18,7 @@
 <script>
 import draggable from "vuedraggable";
 import DOMField from "./DOMField.vue";
-import useLayout from "../store";
+import stateStore from "../store";
 
 export default {
   name: "layoutCanvas",
@@ -30,7 +30,7 @@ export default {
   },
 
   setup() {
-    const { layout } = useLayout();
+    const { layout } = stateStore();
 
     return {
       layout,

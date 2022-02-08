@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import useLayout from "../store";
+import stateStore from "../store";
 
 export default {
   props: {
@@ -20,7 +20,7 @@ export default {
   },
 
   setup() {
-    const { addRow } = useLayout();
+    const { addRow } = stateStore();
 
     return {
       addRow,

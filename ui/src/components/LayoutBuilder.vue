@@ -6,14 +6,14 @@
       <RawJson :data="layout" title="JSON layout" />
     </div>
     <div class="content">
-      <LayoutCanvas :layout="layout" />
+      <LayoutCanvas />
     </div>
   </main>
 </template>
 
 <script>
 import { onMounted } from "vue";
-import useLayout from "../store";
+import stateStore from "../store";
 import RawJson from "./RawJson.vue";
 import AvailableComponents from "./AvailableComponents.vue";
 import LayoutCanvas from "./LayoutCanvas.vue";
@@ -28,7 +28,7 @@ export default {
   },
 
   setup() {
-    const { layout, fetchLayout } = useLayout();
+    const { layout, fetchLayout } = stateStore();
 
     onMounted(() => {
       fetchLayout();
