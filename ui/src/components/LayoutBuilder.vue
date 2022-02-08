@@ -28,10 +28,11 @@ export default {
   },
 
   setup() {
-    const { layout, fetchLayout } = stateStore();
+    const { fetchLayout, fetchComponents, layout } = stateStore();
 
     onMounted(() => {
       fetchLayout();
+      fetchComponents();
     });
 
     return {

@@ -18,6 +18,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import stateStore from "../store";
 
 export default {
   name: "availableComponents",
@@ -27,18 +28,20 @@ export default {
     draggable,
   },
 
+  setup() {
+    const { components } = stateStore();
+
+    return {
+      components,
+    };
+  },
+
   data() {
     return {
-      components: [],
       dragging: false,
     };
   },
 
-  mounted() {
-    fetch("http://localhost:3000/components")
-      .then((res) => res.json())
-      .then((data) => (this.components = data));
-  },
 };
 </script>
 

@@ -1,9 +1,8 @@
 import { reactive, toRefs, getCurrentInstance } from "vue";
 
-const url = 'http://localhost:3000/layout';
-
 const state = reactive({
     layout: [],
+    components: [],
 });
 
 export default function stateStore() {
@@ -12,9 +11,22 @@ export default function stateStore() {
         const plbConf = instance.appContext.config.globalProperties.plb;
 
         if (plbConf === undefined) {
+            const url = 'http://localhost:3000/layout';
             state.layout = await (await fetch(url)).json();
         } else {
             state.layout = await (plbConf.layout);
+        }
+    }
+
+    const fetchComponents = async () => {
+        const instance = getCurrentInstance()
+        const plbConf = instance.appContext.config.globalProperties.plb;
+
+        if (plbConf === undefined) {
+            const url = 'http://localhost:3000/components';
+            state.components = await (await fetch(url)).json();
+        } else {
+            state.components = await (plbConf.components);
         }
     }
 
@@ -41,6 +53,7 @@ export default function stateStore() {
     return {
         ...toRefs(state),
         fetchLayout,
+        fetchComponents,
         addRow
     }
 }
