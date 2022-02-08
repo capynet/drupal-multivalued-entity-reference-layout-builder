@@ -1,41 +1,32 @@
 <template>
-  <main class="skeleton">
-    <div class="sidebar">
-      <h2>Available components</h2>
-      <AvailableComponents />
-      <RawJson :data="layout" title="JSON layout" />
-    </div>
-    <div class="content">
-      <LayoutCanvas :layout="layout" />
-    </div>
-  </main>
+  <a href="#" @click="launch" v-if="!builderLaunched">Launch</a>
+
+  <LayoutBuilder v-if="builderLaunched" />
 </template>
 
 <script>
-import { onMounted } from "vue";
-import useLayout from "./store";
-import RawJson from "./components/RawJson.vue";
-import AvailableComponents from "./components/AvailableComponents.vue";
-import LayoutCanvas from "./components/LayoutCanvas.vue";
+import { defineAsyncComponent, ref } from 'vue'
+const LayoutBuilder = defineAsyncComponent(() => import('./components/LayoutBuilder.vue'))
 
 export default {
   name: "Layout builder",
 
   components: {
-    AvailableComponents,
-    LayoutCanvas,
-    RawJson,
+    LayoutBuilder,
   },
 
   setup() {
-    const { layout, fetchLayout } = useLayout();
+    let builderLaunched = ref(false);
 
-    onMounted(() => {
-      fetchLayout();
-    });
+    const launch = (e) => {
+      e.preventDefault();
+      builderLaunched.value = true;
+    }
+
 
     return {
-      layout,
+      builderLaunched,
+      launch
     };
   },
 
@@ -43,18 +34,4 @@ export default {
 </script>
 
 <style scoped>
-#plb-app {
-}
-
-.skeleton {
-  display: flex;
-}
-
-.skeleton .sidebar {
-  width: 30%;
-}
-
-.skeleton .content {
-  width: 80%;
-}
 </style>
