@@ -5,7 +5,6 @@ class StoreApp {
         return createStore({
             state() {
                 return {
-                    count: confPack.mountPoint,
                     layout: confPack.layout,
                     components: confPack.components
                 }
