@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import stateStore from "../store";
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import RawJson from "./RawJson.vue";
 import AvailableComponents from "./AvailableComponents.vue";
 import LayoutCanvas from "./LayoutCanvas.vue";
@@ -28,15 +28,10 @@ export default {
   },
 
   setup() {
-    const { fetchLayout, fetchComponents, layout } = stateStore();
-
-    onMounted(() => {
-      fetchLayout();
-      fetchComponents();
-    });
+    const store = useStore()
 
     return {
-      layout
+      layout: computed(() => store.state.layout),
     };
   },
 
@@ -44,9 +39,6 @@ export default {
 </script>
 
 <style scoped>
-#plb-app {
-}
-
 .skeleton {
   display: flex;
 }

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import stateStore from "../store";
+import { useStore } from 'vuex'
 
 export default {
   props: {
@@ -20,7 +20,28 @@ export default {
   },
 
   setup() {
-    const { addRow } = stateStore();
+    const store = useStore()
+
+    /**
+     * Add a new field to the layout.
+     * 
+     * @param {String} pos Indicates if the field should be added before or after the current field.
+     * @param {Number} index Current field position used as reference.
+     * @param {Number} cols Number of columns to add.
+     */
+    const addRow = (pos, index, cols) => {
+      const position = index + (pos === 'after' ? 1 : 0)
+      const rowTpl = { "cols": [] };
+
+      for (let i = 0; i < cols; i++) {
+        // colTpl must be inside the loop to avoid references to the same object.
+        const colTpl = { "components": [] };
+        rowTpl.cols.push(colTpl);
+      }
+
+      store.commit("addRow", { position, rowTpl });
+    }
+
 
     return {
       addRow,

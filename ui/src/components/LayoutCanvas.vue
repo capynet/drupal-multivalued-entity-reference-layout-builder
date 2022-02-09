@@ -16,9 +16,10 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import draggable from "vuedraggable";
 import DOMField from "./DOMField.vue";
-import stateStore from "../store";
 
 export default {
   name: "layoutCanvas",
@@ -30,10 +31,10 @@ export default {
   },
 
   setup() {
-    const { layout } = stateStore();
+    const store = useStore()
 
     return {
-      layout,
+      layout: computed(() => store.state.layout),
     };
   },
 

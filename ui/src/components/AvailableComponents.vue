@@ -17,8 +17,10 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import draggable from "vuedraggable";
-import stateStore from "../store";
+
 
 export default {
   name: "availableComponents",
@@ -29,10 +31,10 @@ export default {
   },
 
   setup() {
-    const { components } = stateStore();
+    const store = useStore()
 
     return {
-      components,
+      components: computed(() => store.state.components),
     };
   },
 
