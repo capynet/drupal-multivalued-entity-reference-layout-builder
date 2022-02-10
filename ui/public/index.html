@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script>
+      window.drupalSettings = {};
+
+      window.drupalSettings.plb = [
+        {
+          mountPoint: "#plb-app",
+          layout: {
+            rows: [
+              {
+                cols: [
+                  {
+                    components: [],
+                  },
+                ],
+              },
+            ],
+          },
+          components: [
+            {
+              id: "slider-1",
+              label: "Slider hero",
+              preview:
+                "<h1>This is a preview for the slider</h1><p>In this case is just a text sample but in here you may put a simplified shape of the component of even an image.</p>",
+            },
+            {
+              id: "image-with-text-2",
+              label: "Image of people dancing with an intro",
+              preview:
+                "<h3>This is a preview for the text component</h3><p>In this case is just a text sample but in here you may put a simplified shape of the component of even an image.</p>",
+            },
+            {
+              id: "no-prev-comp",
+              label: "Desde JSON Component without preview.",
+              preview: "",
+            },
+          ],
+        },
+        {
+          mountPoint: "#plb-app2",
+          layout: {
+            rows: [
+              {
+                cols: [
+                  {
+                    components: [],
+                  },
+                ],
+              },
+            ],
+          },
+          components: [
+            {
+              id: "slider-1",
+              label: "Slider hero",
+              preview:
+                "<h1>This is a preview for the slider</h1><p>In this case is just a text sample but in here you may put a simplified shape of the component of even an image.</p>",
+            },
+          ],
+        },
+      ];
+    </script>
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
     <div id="plb-app"></div>
+    <div id="plb-app2"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
