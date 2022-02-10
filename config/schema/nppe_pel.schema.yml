@@ -1,12 +1,12 @@
-# Schema for configuration files of the Paragraphs entity layout module.
+# Schema for configuration files of the Paragraphs layout builder module.
 
-node.type.*.third_party.pel:
+node.type.*.third_party.plb:
   type: mapping
-  label: 'Per-content type PEL settings'
+  label: "Per-content type paragraphs layout builder settings"
   mapping:
     enabled:
       type: boolean
-      label: 'PEL Enabled'
+      label: "Enabled"
     field_name:
       type: string
-      label: 'Field to be processed by PEL'
+      label: "Field to be processed by PLB"
