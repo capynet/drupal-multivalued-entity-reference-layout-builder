@@ -1,0 +1,7 @@
+name: Multivalued paragraph entity reference layout builder
+type: module
+description: Provides a layout builder for multivalued entityr eferenced paragraph fields.
+package: Paragraphs
+core_version_requirement: ^8 || ^9
+dependencies:
+  - paragraphs

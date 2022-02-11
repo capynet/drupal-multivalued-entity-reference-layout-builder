@@ -1,0 +1,13 @@
+plb.save_layout:
+  path: "/plb/layout/{entity_type}/{entity}"
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\plb\Controller\PlbController::storeLayout'
+    _title: "Save layout"
+  requirements:
+    _permission: "use layout builder"
+    _entity_access: "entity.update"
+  options:
+    parameters:
+      entity:
+        type: entity:{entity_type}

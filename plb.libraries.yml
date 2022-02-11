@@ -1,0 +1,6 @@
+# Custom module library for general purposes.
+nppe_plb:
+  js:
+    js/pel.behavior.js: {}
+  dependencies:
+    - core/drupalSettings

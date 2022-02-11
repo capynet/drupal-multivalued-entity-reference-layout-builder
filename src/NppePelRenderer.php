@@ -69,20 +69,20 @@ class NppePelRenderer implements ContainerInjectionInterface {
   public function buildView(array &$build, ContentEntityInterface $entity) {
     $bundle_type = $entity->getEntityType()->getBundleEntityType();
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-    $pel_enabled = (bool) $entity_type->getThirdPartySetting('nppe_pel', 'enabled', FALSE);
-    $pel_field_name = $entity_type->getThirdPartySetting('nppe_pel', 'field_name', '');
+    $plb_enabled = (bool) $entity_type->getThirdPartySetting('plb', 'enabled', FALSE);
+    $plb_field_name = $entity_type->getThirdPartySetting('plb', 'field_name', '');
 
-    if (!$pel_enabled || empty($pel_field_name)) {
+    if (!$plb_enabled || empty($plb_field_name)) {
       return;
     }
 
-    $item_list = $entity->get($pel_field_name);
+    $item_list = $entity->get($plb_field_name);
 
     if (!$item_list instanceof EntityReferenceFieldItemList) {
       return;
     }
 
-    $components = $this->getComponentsFromEntity($entity->get($pel_field_name));
+    $components = $this->getComponentsFromEntity($entity->get($plb_field_name));
 
     if ($this->currentUser->hasPermission('use layout builder') && $entity->access('update')) {
       $route_name = \Drupal::routeMatch()->getRouteName();
@@ -128,6 +128,8 @@ class NppePelRenderer implements ContainerInjectionInterface {
    *
    * @return array
    *   Array of entities with some sugar.
+   * 
+   * @todo is this for sending it to json structure?
    */
   protected function preprocessComponentsForLayoutBuilder(array &$components) {
     foreach (Element::children($components) as $pos) {
