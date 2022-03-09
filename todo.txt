@@ -1,6 +1,5 @@
 - revisar @todos.
 - El boton de edicion que esté mas integrado.
-- La vista previa de los componentes es un problemon.
 - añadir opcion standalone (solo se carga el nodo en una pantalla aislada sin mas regiones)
 - El live layout se pinta en data-live-layout-placeholder pero este no está debajo de un padre comun. Necesito meter todo que cuelgue debajo del wrapper de listado de paragraphs para que pueda haber mas de una instancia.
 - estoy usando selectores como twb-container-fluid en lugar de twb-container-fluid. Esto tiene que ser configurable (nombres de cols, rows, containers)

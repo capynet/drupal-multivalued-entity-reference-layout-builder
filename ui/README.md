@@ -26,9 +26,9 @@ yarn lint
 <script>
       window.drupalSettings = {};
 
-      window.drupalSettings.plb = [
+      window.drupalSettings.merlb = [
         {
-          mountPoint: "#plb-app",
+          mountPoint: "#merlb-app",
           layout: {
             rows: [
               {
@@ -59,9 +59,9 @@ yarn lint
 <script>
       window.drupalSettings = {};
 
-      window.drupalSettings.plb = [
+      window.drupalSettings.merlb = [
         {
-          mountPoint: "#plb-app",
+          mountPoint: "#merlb-app",
           layout: {
             rows: [
               {
@@ -97,7 +97,7 @@ yarn lint
           ],
         },
         {
-          mountPoint: "#plb-app2",
+          mountPoint: "#merlb-app2",
           layout: {
             rows: [
               {

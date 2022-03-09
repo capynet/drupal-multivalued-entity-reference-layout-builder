@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\nppe_pel;
+namespace Drupal\merlb;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Main class for layout manipulation.
  */
-class NppePelRenderer implements ContainerInjectionInterface {
+class MerlbRenderer implements ContainerInjectionInterface {
 
   /**
    * The entity type manager.
@@ -33,7 +33,7 @@ class NppePelRenderer implements ContainerInjectionInterface {
   protected $currentUser;
 
   /**
-   * Creates a new NppePelRenderer instance.
+   * Creates a new MerlbRenderer instance.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
@@ -69,20 +69,20 @@ class NppePelRenderer implements ContainerInjectionInterface {
   public function buildView(array &$build, ContentEntityInterface $entity) {
     $bundle_type = $entity->getEntityType()->getBundleEntityType();
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-    $plb_enabled = (bool) $entity_type->getThirdPartySetting('plb', 'enabled', FALSE);
-    $plb_field_name = $entity_type->getThirdPartySetting('plb', 'field_name', '');
+    $merlb_enabled = (bool) $entity_type->getThirdPartySetting('merlb', 'enabled', FALSE);
+    $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
 
-    if (!$plb_enabled || empty($plb_field_name)) {
+    if (!$merlb_enabled || empty($merlb_field_name)) {
       return;
     }
 
-    $item_list = $entity->get($plb_field_name);
+    $item_list = $entity->get($merlb_field_name);
 
     if (!$item_list instanceof EntityReferenceFieldItemList) {
       return;
     }
 
-    $components = $this->getComponentsFromEntity($entity->get($plb_field_name));
+    $components = $this->getComponentsFromEntity($entity->get($merlb_field_name));
 
     if ($this->currentUser->hasPermission('use layout builder') && $entity->access('update')) {
       $route_name = \Drupal::routeMatch()->getRouteName();
@@ -158,7 +158,7 @@ class NppePelRenderer implements ContainerInjectionInterface {
   protected function attachLayoutBuilder(array &$build, ContentEntityInterface $entity, array &$components) {
     $bundle_type = $build["#node"]->getEntityType()->getBundleEntityType();
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-    $pel_field_name = $entity_type->getThirdPartySetting('nppe_pel', 'field_name', '');
+    $pel_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
 
     $build[$pel_field_name]['#attributes'] = new Attribute(['data-is-pel' => TRUE]);
 
@@ -172,18 +172,18 @@ class NppePelRenderer implements ContainerInjectionInterface {
       ],
     ];
 
-    $build['#attached']['drupalSettings']['nppe_pel'] = [
-      'path' => Url::fromRoute('nppe_pel.save_layout', [
+    $build['#attached']['drupalSettings']['merlb'] = [
+      'path' => Url::fromRoute('merlb.save_layout', [
         'entity_type' => $entity->getEntityTypeId(),
         'entity' => $entity->id(),
       ], ['absolute' => TRUE])->toString(),
 
       // If we have a stored layout use it, other wise create a "standard" one of one row per component.
       // @todo check if default layout should be done at field processing instead here.
-      'layout' => !$entity->nppe_pel_layout->isEmpty() ? Json::decode($entity->nppe_pel_layout->value) : $this->genDefaultLayout($components),
+      'layout' => !$entity->merlb_layout->isEmpty() ? Json::decode($entity->merlb_layout->value) : $this->genDefaultLayout($components),
     ];
 
-    $build['#attached']['library'][] = 'nppe_pel/nppe_pel';
+    $build['#attached']['library'][] = 'merlb/merlb';
   }
 
   /**
@@ -229,10 +229,10 @@ class NppePelRenderer implements ContainerInjectionInterface {
    */
   protected function renderLayout(array &$build, ContentEntityInterface $entity, array $components) {
     // @todo should we provide a default layout? I think until user does not decides to use the builder we should not modify the output.
-    $layout = !$entity->nppe_pel_layout->isEmpty() ? Json::decode($entity->nppe_pel_layout->value) : $this->genDefaultLayout($components);
+    $layout = !$entity->merlb_layout->isEmpty() ? Json::decode($entity->merlb_layout->value) : $this->genDefaultLayout($components);
     $bundle_type = $entity->getEntityType()->getBundleEntityType();
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-    $pel_field_name = $entity_type->getThirdPartySetting('nppe_pel', 'field_name', '');
+    $pel_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
 
     if ($layout) {
       // Override original field output with the "layouted" version.

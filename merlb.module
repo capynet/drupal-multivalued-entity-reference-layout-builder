@@ -18,19 +18,19 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
-use Drupal\plb\NppePelRenderer;
+use Drupal\merlb\MerlbRenderer;
 use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
  * Implements hook_entity_base_field_info().
  */
-function plb_entity_base_field_info(EntityTypeInterface $entity_type) {
+function merlb_entity_base_field_info(EntityTypeInterface $entity_type) {
   $fields = [];
 
-  // Add a 'PLB Layout' base field to all node types.
+  // Add a 'merlb Layout' base field to all node types.
   if ($entity_type->id() === 'node') {
-    $fields['plb_layout'] = BaseFieldDefinition::create('map')
-      ->setLabel(t('PLB Layout'))
+    $fields['merlb_layout'] = BaseFieldDefinition::create('map')
+      ->setLabel(t('merlb Layout'))
       ->setRevisionable(TRUE)
       ->setTranslatable(FALSE)
       ->setDisplayOptions('form', [
@@ -50,16 +50,16 @@ function plb_entity_base_field_info(EntityTypeInterface $entity_type) {
 /**
  * Implements hook_node_view()
  */
-function plb_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+function merlb_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
   if ($view_mode === 'full') {
-    \Drupal::classResolver(PLBRenderer::class)->buildView($build, $node);
+    \Drupal::classResolver(MerlbRenderer::class)->buildView($build, $node);
   }
 }
 
 /**
  * Implements hook_theme().
  */
-function plb_theme($existing, $type, $theme, $path) {
+function merlb_theme($existing, $type, $theme, $path) {
   return [
     'pel_builder_rendered_layout' => [
       'variables' => [
@@ -76,14 +76,14 @@ function plb_theme($existing, $type, $theme, $path) {
  * Adds PEL options to the node type form.
  *
  * @see NodeTypeForm::form()
- * @see plb_form_node_type_form_submit()
+ * @see merlb_form_node_type_form_submit()
  */
-function plb_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
+function merlb_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
   /** @var \Drupal\node\NodeTypeInterface $type */
   $type = $form_state->getFormObject()->getEntity();
-  $options = _plb_get_field_options($type);
+  $options = _merlb_get_field_options($type);
 
-  $form['plb'] = [
+  $form['merlb'] = [
     '#type' => 'details',
     '#title' => t('Paragraph field layout builder'),
     '#tree' => TRUE,
@@ -91,60 +91,60 @@ function plb_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
   ];
 
   if (empty($options)) {
-    $form['plb']['markup'] = [
+    $form['merlb']['markup'] = [
       '#markup' => t('There are no fields to process. Please add a multivalued paragraph field.'),
     ];
-    $form['plb']['enabled'] = [
+    $form['merlb']['enabled'] = [
       '#type' => 'value',
       '#value' => FALSE,
     ];
   }
   else {
-    $form['plb']['enabled'] = [
+    $form['merlb']['enabled'] = [
       '#type' => 'checkbox',
       '#title' => t('Enabled'),
-      '#default_value' => $type->getThirdPartySetting('plb', 'enabled'),
-      '#description' => t('Enable plb support for this content type.'),
+      '#default_value' => $type->getThirdPartySetting('merlb', 'enabled'),
+      '#description' => t('Enable merlb support for this content type.'),
     ];
 
-    $form['plb']['field_name'] = [
+    $form['merlb']['field_name'] = [
       '#type' => 'select',
       '#title' => t('Default parent item'),
-      '#default_value' => $type->getThirdPartySetting('plb', 'field_name'),
+      '#default_value' => $type->getThirdPartySetting('merlb', 'field_name'),
       '#options' => $options,
-      '#description' => t('Choose the paragraph field to add plb support.'),
+      '#description' => t('Choose the paragraph field to add merlb support.'),
       '#states' => [
         'invisible' => [
-          'input[name="plb[enabled]"]' => ['checked' => FALSE],
+          'input[name="merlb[enabled]"]' => ['checked' => FALSE],
         ],
       ],
     ];
   }
 
-  $form['#validate'][] = 'plb_form_node_type_form_validate';
-  $form['#entity_builders'][] = 'plb_form_node_type_form_builder';
+  $form['#validate'][] = 'merlb_form_node_type_form_validate';
+  $form['#entity_builders'][] = 'merlb_form_node_type_form_builder';
 }
 
 /**
  * Validate handler for forms with PEL options.
  *
- * @see plb_form_node_type_form_alter()
+ * @see merlb_form_node_type_form_alter()
  */
-function plb_form_node_type_form_validate(&$form, FormStateInterface $form_state) {
+function merlb_form_node_type_form_validate(&$form, FormStateInterface $form_state) {
   // Clear the field name if the support has been disabled.
-  if (empty($form_state->getValue(['plb', 'enabled']))) {
-    $form_state->setValue(['plb', 'field_name'], '');
+  if (empty($form_state->getValue(['merlb', 'enabled']))) {
+    $form_state->setValue(['merlb', 'field_name'], '');
   }
 }
 
 /**
  * Entity builder for the node type form with PEL options.
  *
- * @see plb_form_node_type_form_alter()
+ * @see merlb_form_node_type_form_alter()
  */
-function plb_form_node_type_form_builder($entity_type, NodeTypeInterface $type, &$form, FormStateInterface $form_state) {
-  $type->setThirdPartySetting('plb', 'enabled', $form_state->getValue(['plb', 'enabled']));
-  $type->setThirdPartySetting('plb', 'field_name', $form_state->getValue(['plb', 'field_name']));
+function merlb_form_node_type_form_builder($entity_type, NodeTypeInterface $type, &$form, FormStateInterface $form_state) {
+  $type->setThirdPartySetting('merlb', 'enabled', $form_state->getValue(['merlb', 'enabled']));
+  $type->setThirdPartySetting('merlb', 'field_name', $form_state->getValue(['merlb', 'field_name']));
 }
 
 /**
@@ -156,7 +156,7 @@ function plb_form_node_type_form_builder($entity_type, NodeTypeInterface $type, 
  * @return array
  *   The list of paragraph fields declaredin the given content type.
  */
-function _plb_get_field_options(NodeTypeInterface $type) {
+function _merlb_get_field_options(NodeTypeInterface $type) {
   /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $field_manager */
   $field_manager = \Drupal::service('entity_field.manager');
   $fields = $field_manager->getFieldDefinitions('node', $type->id());
@@ -179,7 +179,7 @@ function _plb_get_field_options(NodeTypeInterface $type) {
  * referenced element was deleted and allocated on the layout.
  * In that case we remove it from the layout too.
  */
-function plb_entity_presave(EntityInterface $entity) {
+function merlb_entity_presave(EntityInterface $entity) {
   $bundle_type = $entity->getEntityType()->getBundleEntityType();
 
   if (is_null($bundle_type) || $entity->isNew()) {
@@ -192,16 +192,16 @@ function plb_entity_presave(EntityInterface $entity) {
     return;
   }
 
-  $plb_enabled = (bool) $entity_type->getThirdPartySetting('plb', 'enabled', FALSE);
-  $plb_field_name = $entity_type->getThirdPartySetting('plb', 'field_name', '');
+  $merlb_enabled = (bool) $entity_type->getThirdPartySetting('merlb', 'enabled', FALSE);
+  $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
   $json_been_modified = FALSE;
 
-  if (!$plb_enabled || empty($plb_field_name)) {
+  if (!$merlb_enabled || empty($merlb_field_name)) {
     return;
   }
 
-  if (!$entity->plb_layout->isEmpty()) {
-    $json = JSON::decode($entity->plb_layout->value);
+  if (!$entity->merlb_layout->isEmpty()) {
+    $json = JSON::decode($entity->merlb_layout->value);
 
     // @todo check this snippet since the logic of how json file is constructed changed a lot.
     foreach ($json as $k_row => $row) {
@@ -209,7 +209,7 @@ function plb_entity_presave(EntityInterface $entity) {
         if (!in_array('empty', $col['components'], TRUE)) {
           foreach ($col['components'] as $k_component => $component) {
             $stored_component_id = $component['id'];
-            $exists = _nppe_pel_check_component_still_exist(
+            $exists = _merlb_check_component_still_exist(
               $stored_component_id,
               $entity->{$pel_field_name}->getValue()
             );
@@ -229,7 +229,7 @@ function plb_entity_presave(EntityInterface $entity) {
     }
 
     if ($json_been_modified) {
-      $entity->plb_layout->value = JSON::encode($json);
+      $entity->merlb_layout->value = JSON::encode($json);
     }
   }
 
@@ -245,7 +245,7 @@ function plb_entity_presave(EntityInterface $entity) {
  *
  * @return bool
  */
-function _plb_check_component_still_exist($entity_uuid, $available_referenced_entities) {
+function _merlb_check_component_still_exist($entity_uuid, $available_referenced_entities) {
   $entity = \Drupal::service('entity.repository')->loadEntityByUuid('paragraph', $entity_uuid);
 
   foreach ($available_referenced_entities as $item) {

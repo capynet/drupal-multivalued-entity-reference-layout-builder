@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\nppe_pel\Controller;
+namespace Drupal\merlb\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controls ajax requests.
  */
-class NppePelController extends ControllerBase {
+class MerlbController extends ControllerBase {
 
   /**
    * Stores a serialized layout into an entity.
@@ -29,7 +29,7 @@ class NppePelController extends ControllerBase {
   public function storeLayout(EntityInterface $entity, Request $request) {
     $layout = $request->request->get('layout');
 
-    $entity->set('nppe_pel_layout', Json::encode($layout));
+    $entity->set('merlb_layout', Json::encode($layout));
     $entity->save();
     return new JsonResponse();
   }

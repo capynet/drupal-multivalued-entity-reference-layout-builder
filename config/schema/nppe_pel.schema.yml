@@ -1,6 +1,6 @@
 # Schema for configuration files of the Paragraphs layout builder module.
 
-node.type.*.third_party.plb:
+node.type.*.third_party.merlb:
   type: mapping
   label: "Per-content type paragraphs layout builder settings"
   mapping:
@@ -9,4 +9,4 @@ node.type.*.third_party.plb:
       label: "Enabled"
     field_name:
       type: string
-      label: "Field to be processed by PLB"
+      label: "Field to be processed by merlb"

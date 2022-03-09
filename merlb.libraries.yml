@@ -1,5 +1,5 @@
 # Custom module library for general purposes.
-nppe_plb:
+merlb:
   js:
     js/pel.behavior.js: {}
   dependencies:

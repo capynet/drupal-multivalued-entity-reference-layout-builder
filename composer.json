@@ -1,8 +1,8 @@
 {
-    "name": "drupal/paragraphs-layout-builder",
-    "type": "drupal-module",
-    "license": "GPL-2.0-or-later",
-    "require": {
-        "drupal/paragraphs": "^1.6"
-    }
+  "name": "drupal/merlb",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/paragraphs": "^1.6"
+  }
 }

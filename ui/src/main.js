@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import StoreApp from './StoreApp'
 import App from './App.vue'
 
-if (window.drupalSettings && window.drupalSettings.plb !== undefined) {
-    window.drupalSettings.plb.forEach(confPack => {
+if (window.drupalSettings && window.drupalSettings.merlb !== undefined) {
+    window.drupalSettings.merlb.forEach(confPack => {
         const app = createApp(App);
         const store = new StoreApp(confPack);
         app.use(store)
