@@ -1,3 +1,4 @@
+
 - revisar @todos.
 - El boton de edicion que esté mas integrado.
 - añadir opcion standalone (solo se carga el nodo en una pantalla aislada sin mas regiones)

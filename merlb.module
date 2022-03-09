@@ -85,34 +85,36 @@ function merlb_form_node_type_form_alter(&$form, FormStateInterface $form_state)
 
   $form['merlb'] = [
     '#type' => 'details',
-    '#title' => t('Paragraph field layout builder'),
+    '#title' => t('Multivalued entity reference layout builder (Merlb)'),
     '#tree' => TRUE,
     '#group' => 'additional_settings',
   ];
 
   if (empty($options)) {
     $form['merlb']['markup'] = [
-      '#markup' => t('There are no fields to process. Please add a multivalued paragraph field.'),
+      '#markup' => t('There are no fields to process. Please add a multivalued entity reference field.'),
     ];
+
     $form['merlb']['enabled'] = [
       '#type' => 'value',
       '#value' => FALSE,
     ];
+
   }
   else {
     $form['merlb']['enabled'] = [
       '#type' => 'checkbox',
       '#title' => t('Enabled'),
       '#default_value' => $type->getThirdPartySetting('merlb', 'enabled'),
-      '#description' => t('Enable merlb support for this content type.'),
+      '#description' => t('Enable Merlb support for this content type.'),
     ];
 
-    $form['merlb']['field_name'] = [
-      '#type' => 'select',
-      '#title' => t('Default parent item'),
-      '#default_value' => $type->getThirdPartySetting('merlb', 'field_name'),
+    $form['merlb']['field_names'] = [
+      '#type' => 'checkboxes',
+      '#title' => t('Fields'),
+      '#default_value' => $type->getThirdPartySetting('merlb', 'field_names'),
       '#options' => $options,
-      '#description' => t('Choose the paragraph field to add merlb support.'),
+      '#description' => t('Choose the field to add Merlb support.'),
       '#states' => [
         'invisible' => [
           'input[name="merlb[enabled]"]' => ['checked' => FALSE],
@@ -126,35 +128,36 @@ function merlb_form_node_type_form_alter(&$form, FormStateInterface $form_state)
 }
 
 /**
- * Validate handler for forms with PEL options.
+ * Validate handler for forms with merlb options.
  *
  * @see merlb_form_node_type_form_alter()
  */
 function merlb_form_node_type_form_validate(&$form, FormStateInterface $form_state) {
   // Clear the field name if the support has been disabled.
   if (empty($form_state->getValue(['merlb', 'enabled']))) {
-    $form_state->setValue(['merlb', 'field_name'], '');
+    $form_state->setValue(['merlb', 'field_names'], '');
   }
 }
 
 /**
- * Entity builder for the node type form with PEL options.
+ * Entity builder for the node type form with merlb options.
  *
  * @see merlb_form_node_type_form_alter()
  */
 function merlb_form_node_type_form_builder($entity_type, NodeTypeInterface $type, &$form, FormStateInterface $form_state) {
+  // @todo check first time third party gets saved. I suspect it will trigger an error since the setting does not exist.
   $type->setThirdPartySetting('merlb', 'enabled', $form_state->getValue(['merlb', 'enabled']));
-  $type->setThirdPartySetting('merlb', 'field_name', $form_state->getValue(['merlb', 'field_name']));
+  $type->setThirdPartySetting('merlb', 'field_names', $form_state->getValue(['merlb', 'field_names']));
 }
 
 /**
- * Helper function to get the list of paragraph fields in a given content type.
+ * Helper function to get the list of entity reference fields in a given content type.
  *
  * @param \Drupal\node\NodeTypeInterface $type
  *   The node type to extract the fields from.
  *
  * @return array
- *   The list of paragraph fields declaredin the given content type.
+ *   The list of fields declared in the given content type.
  */
 function _merlb_get_field_options(NodeTypeInterface $type) {
   /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $field_manager */
@@ -193,7 +196,7 @@ function merlb_entity_presave(EntityInterface $entity) {
   }
 
   $merlb_enabled = (bool) $entity_type->getThirdPartySetting('merlb', 'enabled', FALSE);
-  $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
+  $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_names', '');
   $json_been_modified = FALSE;
 
   if (!$merlb_enabled || empty($merlb_field_name)) {

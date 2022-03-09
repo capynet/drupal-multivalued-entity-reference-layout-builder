@@ -2,11 +2,11 @@
 
 node.type.*.third_party.merlb:
   type: mapping
-  label: "Per-content type paragraphs layout builder settings"
+  label: "Per-content type merlb settings"
   mapping:
     enabled:
       type: boolean
       label: "Enabled"
-    field_name:
+    field_names:
       type: string
       label: "Field to be processed by merlb"
