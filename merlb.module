@@ -182,7 +182,7 @@ function _merlb_get_field_options(NodeTypeInterface $type) {
  * referenced element was deleted and allocated on the layout.
  * In that case we remove it from the layout too.
  */
-function merlb_entity_presave(EntityInterface $entity) {
+/* function merlb_entity_presave(EntityInterface $entity) {
   $bundle_type = $entity->getEntityType()->getBundleEntityType();
 
   if (is_null($bundle_type) || $entity->isNew()) {
@@ -236,7 +236,7 @@ function merlb_entity_presave(EntityInterface $entity) {
     }
   }
 
-}
+} */
 
 /**
  * Checks if a component id is on the entity referenced items.
@@ -248,7 +248,7 @@ function merlb_entity_presave(EntityInterface $entity) {
  *
  * @return bool
  */
-function _merlb_check_component_still_exist($entity_uuid, $available_referenced_entities) {
+/* function _merlb_check_component_still_exist($entity_uuid, $available_referenced_entities) {
   $entity = \Drupal::service('entity.repository')->loadEntityByUuid('paragraph', $entity_uuid);
 
   foreach ($available_referenced_entities as $item) {
@@ -260,3 +260,4 @@ function _merlb_check_component_still_exist($entity_uuid, $available_referenced_
   }
   return FALSE;
 }
+ */
