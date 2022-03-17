@@ -61,7 +61,7 @@ function merlb_node_view(array &$build, NodeInterface $node, EntityViewDisplayIn
  */
 function merlb_theme($existing, $type, $theme, $path) {
   return [
-    'pel_builder_rendered_layout' => [
+    'merlb_builder_rendered_layout' => [
       'variables' => [
         'layout' => [],
         'components' => [],
@@ -73,7 +73,7 @@ function merlb_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_form_FORM_ID_alter() for \Drupal\node\NodeTypeForm.
  *
- * Adds PEL options to the node type form.
+ * Adds merlb options to the node type form.
  *
  * @see NodeTypeForm::form()
  * @see merlb_form_node_type_form_submit()
@@ -214,7 +214,7 @@ function _merlb_get_field_options(NodeTypeInterface $type) {
             $stored_component_id = $component['id'];
             $exists = _merlb_check_component_still_exist(
               $stored_component_id,
-              $entity->{$pel_field_name}->getValue()
+              $entity->{$merlb_field_name}->getValue()
             );
 
             if (!$exists) {

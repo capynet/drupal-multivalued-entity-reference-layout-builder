@@ -8,5 +8,8 @@ node.type.*.third_party.merlb:
       type: boolean
       label: "Enabled"
     field_names:
-      type: string
+      type: sequence
       label: "Field to be processed by merlb"
+      sequence:
+        type: string
+        label: "Field name"
