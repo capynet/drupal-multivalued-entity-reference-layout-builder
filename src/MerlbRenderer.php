@@ -68,28 +68,34 @@ class MerlbRenderer implements ContainerInjectionInterface {
    */
   public function buildView(array &$build, ContentEntityInterface $entity) {
     $bundle_type = $entity->getEntityType()->getBundleEntityType();
+    /** @var \Drupal\Node\Entity\NodeType @entity_type */
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
     $merlb_enabled = (bool) $entity_type->getThirdPartySetting('merlb', 'enabled', FALSE);
-    $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
+    $merlb_field_name = $entity_type->getThirdPartySetting('merlb', 'field_names', '');
 
     if (!$merlb_enabled || empty($merlb_field_name)) {
       return;
     }
 
-    $item_list = $entity->get($merlb_field_name);
+    foreach ($merlb_field_name as $field_name) {
+      $item_list = $entity->get($field_name);
 
-    if (!$item_list instanceof EntityReferenceFieldItemList) {
-      return;
-    }
+      if (!$item_list instanceof EntityReferenceFieldItemList) {
+        return;
+      }
 
-    $components = $this->getComponentsFromEntity($entity->get($merlb_field_name));
+      $components = $this->getComponentsFromEntity($item_list);
 
-    if ($this->currentUser->hasPermission('use layout builder') && $entity->access('update')) {
-      $route_name = \Drupal::routeMatch()->getRouteName();
-      if ($route_name == 'entity.node.canonical') {
-        $this->attachLayoutBuilder($build, $entity, $components);
+      // @todo check this permission. Maybe is not this name anymore.
+      if ($this->currentUser->hasPermission('use layout builder') && $entity->access('update')) {
+        $route_name = \Drupal::routeMatch()->getRouteName();
+        if ($route_name == 'entity.node.canonical') {
+          $this->attachLayoutBuilder($build, $entity, $components);
+        }
       }
     }
+
+
 
     $this->renderLayout($build, $entity, $components);
   }
@@ -157,6 +163,7 @@ class MerlbRenderer implements ContainerInjectionInterface {
    */
   protected function attachLayoutBuilder(array &$build, ContentEntityInterface $entity, array &$components) {
     $bundle_type = $build["#node"]->getEntityType()->getBundleEntityType();
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityBase @entity_type */
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
     $pel_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
 
@@ -231,6 +238,7 @@ class MerlbRenderer implements ContainerInjectionInterface {
     // @todo should we provide a default layout? I think until user does not decides to use the builder we should not modify the output.
     $layout = !$entity->merlb_layout->isEmpty() ? Json::decode($entity->merlb_layout->value) : $this->genDefaultLayout($components);
     $bundle_type = $entity->getEntityType()->getBundleEntityType();
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityBase @entity_type */
     $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
     $pel_field_name = $entity_type->getThirdPartySetting('merlb', 'field_name', '');
 
@@ -243,5 +251,4 @@ class MerlbRenderer implements ContainerInjectionInterface {
       ];
     }
   }
-
 }
